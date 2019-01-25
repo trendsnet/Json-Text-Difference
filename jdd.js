@@ -380,7 +380,7 @@
             let linesRight = $(`#${blockRightId}`).text().split('\n');
             let textRight = $(`#${blockRightId}`).text();
             for (let j = 0; j < linesRight.length; j++) {
-                if (diffs[i]['path2']['line'] === j + 1 && diffs[i]['type'] == 'eq') {
+                if (diffs[i]['path2']['line'] == j + 1 && diffs[i]['type'] == 'eq') {
                     $(`#${blockRightId}`).text(textRight.replace(linesRight[j], `<span style="color:#e67e22;">${linesRight[j]}</span>`));
                 }
                 else if (diffs[i]['path2']['line'] == j + 1 && diffs[i]['type'] == 'left') {
