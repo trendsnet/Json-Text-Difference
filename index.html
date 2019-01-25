@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Json Diff</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container">
+  <div class="row clearfix">
+    <div class="col-md-12 column">
+      <div class="jumbotron">
+        <h1>
+          Json Diff Plugin
+        </h1>
+        <p>
+          Find the difference between 2 json text
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="row clearfix">
+    <div class="col-md-6 column">
+      <pre id="left">
+        {
+          "fruit": "Apple",
+          "size": "Large",
+          "color": "Red",
+          "options": [
+              "Sweet",
+              "Antioxidants"
+          ],
+          "price": "2$"
+        }
+      </pre>
+    </div>
+    <div class="col-md-6 column">
+      <pre id="right">
+        {
+          "fruit": "Apple",
+          "size": "Large",
+          "color": "Green",
+          "options": [
+              "Sweet",
+              "Acid"
+          ],
+          "price": "1.50$"
+        }
+      </pre>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+<script src="jdd.min.js"></script>
+<script>
+  leftBlockId = $('#left').attr('id');
+  rightBlockId = $('#right').attr('id');
+  $(document).jdd(leftBlockId, rightBlockId);
+</script>
+</body>
+</html>
