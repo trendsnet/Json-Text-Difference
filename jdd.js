@@ -17,7 +17,7 @@
 
         diffVal(left, config, right, config2);
         diffColor(diffs, blockLeftId, blockRightId);
-        //console.log(diffs);
+        console.log(diffs);
     };
     let LEFT = 'left';
     let RIGHT = 'right';
@@ -244,18 +244,18 @@
             return;
         }
 
-        // if (val1.length < val2.length) {
-        //     for (let i = val1.length; i < val2.length; i++) {
-        //         diffs.push(generateDiff(config1, generatePath(config1),
-        //             config2, generatePath(config2, '[' + i + ']'),
-        //             'Missing element <code>' + i + '</code> from the array on the left side', MISSING));
-        //     }
-        // }
+        if (val1.length < val2.length) {
+            for (let i = val1.length; i < val2.length; i++) {
+                diffs.push(generateDiff(config1, generatePath(config1),
+                    config2, generatePath(config2, '[' + i + ']'),
+                    'Missing element <code>' + i + '</code> from the array on the left side', LEFT));
+            }
+        }
         val1.forEach(function(arrayVal, index) {
             if (val2.length <= index) {
-                // diffs.push(generateDiff(config1, generatePath(config1, '[' + index + ']'),
-                //     config2, generatePath(config2),
-                //     'Missing element <code>' + index + '</code> from the array on the right side', MISSING));
+                diffs.push(generateDiff(config1, generatePath(config1, '[' + index + ']'),
+                    config2, generatePath(config2),
+                    'Missing element <code>' + index + '</code> from the array on the right side', RIGHT));
             } else {
                 config1.currentPath.push('/[' + index + ']');
                 config2.currentPath.push('/[' + index + ']');
@@ -290,7 +290,7 @@
                 if (!data2.hasOwnProperty(key)) {
                     diffs.push(generateDiff(config1, generatePath(config1),
                         config2, generatePath(config2),
-                        'Missing property <code>' + key + '</code> from the object on the right side', MISSING));
+                        'Missing property <code>' + key + '</code> from the object on the right side', RIGHT));
                 } else {
                     config2.currentPath.push(key);
 
@@ -307,7 +307,7 @@
                 if (!data1.hasOwnProperty(key)) {
                     diffs.push(generateDiff(config1, generatePath(config1),
                         config2, generatePath(config2, key),
-                        'Missing property <code>' + key + '</code> from the object on the left side', MISSING));
+                        'Missing property <code>' + key + '</code> from the object on the left side', LEFT));
                 }
             }
         }
@@ -341,6 +341,24 @@
         };
     };
 
+    function diffBool (val1, config1, val2, config2) {
+        if (getType(val2) !== 'boolean') {
+            diffs.push(generateDiff(config1, generatePath(config1),
+                config2, generatePath(config2),
+                'Both types should be booleans', TYPE));
+        } else if (val1 !== val2) {
+            if (val1) {
+                diffs.push(generateDiff(config1, generatePath(config1),
+                    config2, generatePath(config2),
+                    'The left side is <code>true</code> and the right side is <code>false</code>', EQUALITY));
+            } else {
+                diffs.push(generateDiff(config1, generatePath(config1),
+                    config2, generatePath(config2),
+                    'The left side is <code>false</code> and the right side is <code>true</code>', EQUALITY));
+            }
+        }
+    };
+
     function forEach(array, callback, scope) {
         for (let idx = 0; idx < array.length; idx++) {
             callback.call(scope, array[idx], idx, array);
@@ -352,7 +370,9 @@
             let linesLeft = $(`#${blockLeftId}`).text().split('\n');
             let textLeft = $(`#${blockLeftId}`).text();
             for (let j = 0; j < linesLeft.length; j++) {
-                if (diffs[i]['path1']['line'] == j + 1) {
+                if (diffs[i]['path1']['line'] == j + 1 && diffs[i]['type'] == 'eq' || diffs[i]['type'] == 'type') {
+                    $(`#${blockLeftId}`).text(textLeft.replace(linesLeft[j], `<span style="color:#e67e22;">${linesLeft[j]}</span>`));
+                } else if (diffs[i]['path1']['line'] == j + 1 && diffs[i]['type'] == 'right') {
                     $(`#${blockLeftId}`).text(textLeft.replace(linesLeft[j], `<span style="color:#c0392b;">${linesLeft[j]}</span>`));
                 }
             }
@@ -360,9 +380,12 @@
             let linesRight = $(`#${blockRightId}`).text().split('\n');
             let textRight = $(`#${blockRightId}`).text();
             for (let j = 0; j < linesRight.length; j++) {
-                if (diffs[i]['path2']['line'] == j + 1) {
-                    $(`#${blockRightId}`).text(textRight.replace(linesRight[j], `<span style="color:#c0392b;">${linesRight[j]}</span>`));
+                if (diffs[i]['path2']['line'] === j + 1 && diffs[i]['type'] == 'eq') {
+                    $(`#${blockRightId}`).text(textRight.replace(linesRight[j], `<span style="color:#e67e22;">${linesRight[j]}</span>`));
                 }
+                else if (diffs[i]['path2']['line'] == j + 1 && diffs[i]['type'] == 'left') {
+                  $(`#${blockRightId}`).text(textRight.replace(linesRight[j], `<span style="color:#27ae60;">${linesRight[j]}</span>`));
+                } 
             }
         }
         $(`#${blockLeftId}`).html($(`#${blockLeftId}`).text());
