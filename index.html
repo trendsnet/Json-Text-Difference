@@ -22,33 +22,13 @@
     <div class="col-md-6 column">
       <h3 class="text-center">Before</h3>
       <pre id="left">
-        {
-  "kafka_environment": {},
-  "kafka_server_properties": {},
-  "kafka_version": "2.11-1.0.1",
-  "monitored_consumer_groups": [],
-  "name": "infra",
-  "pages": false,
-  "root_users": [],
-  "tenant": "Infra",
-  "topology": {}
-}
+        {"Aidan Gillen": {"array": ["Game of Thron\"es","The Wire"],"string": "some string","int": 2,"aboolean": true, "boolean": true,"object": {"foo": "bar","object1": {"new prop1": "new prop value"},"object2": {"new prop1": "new prop value"},"object3": {"new prop1": "new prop value"},"object4": {"new prop1": "new prop value"}}},"Amy Ryan": {"one": "In Treatment","two": "The Wire"},"Annie Fitzgerald": ["Big Love","True Blood"],"Anwan Glover": ["Treme","The Wire"],"Alexander Skarsgard": ["Generation Kill","True Blood"], "Clarke Peters": null}
       </pre>
     </div>
     <div class="col-md-6 column">
       <h3 class="text-center">After</h3>
       <pre id="right">
-        {
-  "kafka_environment": {},
-  "kafka_server_properties": {},
-  "kafka_version": "2.11-1.0.1",
-  "monitored_consumer_groups": [],
-  "name": "infra",
-  "pages": false,
-  "root_users": [],
-  "tenant": "Infrafdfdfffffffff",
-  "topology": {}
-}
+        {"Aidan Gillen": {"array": ["Game of Thrones","The Wire"],"string": "some string","int": "2","otherint": 4, "aboolean": "true", "boolean": false,"object": {"foo": "bar"}},"Amy Ryan": ["In Treatment","The Wire"],"Annie Fitzgerald": ["True Blood","Big Love","The Sopranos","Oz"],"Anwan Glover": ["Treme","The Wire"],"Alexander Skarsg?rd": ["Generation Kill","True Blood"],"Alice Farmer": ["The Corner","The Wire"]}
       </pre>
     </div>
   </div>
