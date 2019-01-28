@@ -1,8 +1,8 @@
 (function($) {
     $.fn.jdd = function(blockLeftId, blockRightId) {
         diffs = [];
-        let left = JSON.parse($(`#${blockLeftId}`).text());
-        let right = JSON.parse($(`#${blockRightId}`).text());
+        let left = $(`#${blockLeftId}`).text().length != 0 ? JSON.parse($(`#${blockLeftId}`).text()) : JSON.parse('{}');
+        let right = $(`#${blockRightId}`).text().length != 0 ? JSON.parse($(`#${blockRightId}`).text()) : JSON.parse('{}');
 
         let config = createConfig();
         formatAndDecorate(config, left);
@@ -17,7 +17,7 @@
 
         diffVal(left, config, right, config2);
         diffColor(diffs, blockLeftId, blockRightId);
-        console.log(diffs);
+        // console.log(diffs);
     };
     let LEFT = 'left';
     let RIGHT = 'right';
