@@ -19,13 +19,13 @@
         diffColor(diffs, blockLeftId, blockRightId);
         // console.log(diffs);
     };
-    let LEFT = 'left';
-    let RIGHT = 'right';
-    let EQUALITY = 'eq';
-    let TYPE = 'type';
-    let MISSING = 'missing';
+    const LEFT = 'left';
+    const RIGHT = 'right';
+    const EQUALITY = 'eq';
+    const TYPE = 'type';
+    const MISSING = 'missing';
     let diffs = [];
-    let requestCount = 0;
+    const requestCount = 0;
 
     function createConfig() {
         return {
